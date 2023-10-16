@@ -66,11 +66,11 @@ export class Game {
 
   // --------------RELATIONS
   @OneToMany(() => Personnage, (personnages) => personnages.game)
-  personnages: [Personnage];
+  personnages: Personnage[];
 
   @OneToMany(() => Item, (items) => items.game)
-  items: [Item];
+  items: Item[];
 
   @OneToMany(() => Statistic, (statistics) => statistics.game)
-  statistics: [Statistic];
+  statistics: Statistic[];
 }

@@ -40,5 +40,5 @@ export class Statistic {
   game: Game;
 
   @OneToMany(() => Personnage, (personnages) => personnages.statistic)
-  personnages : [Personnage];
+  personnages : Personnage[];
 }
