@@ -3,14 +3,11 @@ import {
   Column,
   PrimaryGeneratedColumn,
   OneToMany,
-  JoinColumn,
-  OneToOne,
   CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { Personnage } from '../../personnage/entities/personnage.entity';
 import { Item } from '../../item/entities/item.entity';
-import { Achievement } from '../../achievement/entities/achievement.entity';
 import { Statistic } from '../../statistic/entities/statistic.entity';
 
 @Entity()
@@ -34,6 +31,25 @@ export class Game {
   })
   description: string;
 
+  @Column({
+    type: 'bool',
+    nullable: false,
+    default: false,
+  })
+  isAccessible: boolean;
+
+  @Column({
+    type: 'int',
+    default: 0,
+  })
+  nb_win: number;
+
+  @Column({
+    type: 'int',
+    default: 0,
+  })
+  nb_lose: number;
+
   // --------------TIMESTAMPS
   @CreateDateColumn({
     type: 'timestamp',
@@ -49,20 +65,12 @@ export class Game {
   updated_at: Date;
 
   // --------------RELATIONS
-  @OneToMany(() => Personnage, (personnages) => personnages.game, {
-    cascade: true,
-  })
-  personnages: string[];
+  @OneToMany(() => Personnage, (personnages_ids) => personnages_ids.game_id)
+  personnages_ids: [string];
 
-  @OneToMany(() => Item, (items) => items.game, {
-    cascade: true,
-  })
-  items: string[];
+  @OneToMany(() => Item, (items_ids) => items_ids.game_id)
+  items_ids: [string];
 
-  @OneToMany(() => Achievement, (achievements) => achievements.game)
-  achievements: string[];
-
-  @OneToOne(() => Statistic)
-  @JoinColumn()
-  statistic: string;
+  @OneToMany(() => Statistic, (statistics_ids) => statistics_ids.game_id)
+  statistics_ids: [string];
 }
