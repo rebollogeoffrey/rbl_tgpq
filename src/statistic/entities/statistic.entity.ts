@@ -1,15 +1,14 @@
 import {
-  Entity,
   Column,
-  PrimaryGeneratedColumn,
-  OneToOne,
-  JoinColumn,
-  UpdateDateColumn,
   CreateDateColumn,
+  Entity,
+  ManyToOne,
   OneToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
-import { Game } from '../../game/entities/game.entity';
-import { Historic } from '../../historic/entities/historic.entity';
+import { Game } from "../../game/entities/game.entity";
+import { Personnage } from 'src/personnage/entities/personnage.entity';
 
 @Entity()
 export class Statistic {
@@ -18,15 +17,9 @@ export class Statistic {
 
   @Column({
     type: 'int',
-    nullable: false,
+    default: 0,
   })
-  nb_win: number;
-
-  @Column({
-    type: 'int',
-    nullable: false,
-  })
-  nb_lose: number;
+  nb_killed: number;
 
   // --------------TIMESTAMPS
   @CreateDateColumn({
@@ -43,10 +36,9 @@ export class Statistic {
   updated_at: Date;
 
   // --------------RELATIONS
-  @OneToOne(() => Game, { cascade: false })
-  @JoinColumn()
-  game: string;
+  @ManyToOne(() => Game, (game_id) => game_id.statistics_ids)
+  game_id: string;
 
-  @OneToMany(() => Historic, (historics) => historics.statistic)
-  historics: [string];
+  @OneToMany(() => Personnage, (personnages_ids) => personnages_ids.statistic_id)
+  personnages_ids : [string];
 }
