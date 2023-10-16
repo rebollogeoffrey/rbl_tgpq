@@ -65,12 +65,12 @@ export class Game {
   updated_at: Date;
 
   // --------------RELATIONS
-  @OneToMany(() => Personnage, (personnages_ids) => personnages_ids.game_id)
-  personnages_ids: [string];
+  @OneToMany(() => Personnage, (personnages) => personnages.game)
+  personnages: [Personnage];
 
-  @OneToMany(() => Item, (items_ids) => items_ids.game_id)
-  items_ids: [string];
+  @OneToMany(() => Item, (items) => items.game)
+  items: [Item];
 
-  @OneToMany(() => Statistic, (statistics_ids) => statistics_ids.game_id)
-  statistics_ids: [string];
+  @OneToMany(() => Statistic, (statistics) => statistics.game)
+  statistics: [Statistic];
 }

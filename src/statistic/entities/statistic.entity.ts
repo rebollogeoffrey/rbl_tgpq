@@ -36,9 +36,9 @@ export class Statistic {
   updated_at: Date;
 
   // --------------RELATIONS
-  @ManyToOne(() => Game, (game_id) => game_id.statistics_ids)
-  game_id: string;
+  @ManyToOne(() => Game, (game) => game.statistics)
+  game: Game;
 
-  @OneToMany(() => Personnage, (personnages_ids) => personnages_ids.statistic_id)
-  personnages_ids : [string];
+  @OneToMany(() => Personnage, (personnages) => personnages.statistic)
+  personnages : [Personnage];
 }

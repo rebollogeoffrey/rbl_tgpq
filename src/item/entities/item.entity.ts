@@ -5,9 +5,28 @@ import {
   ManyToOne,
   CreateDateColumn,
   UpdateDateColumn,
+  ManyToMany,
 } from 'typeorm';
 import { Game } from '../../game/entities/game.entity';
-import { Effect } from '../../effect/entities/effect.entity';
+import { Inventory } from 'src/inventory/entities/inventory.entity';
+
+export enum Stat_affected {
+  DEXTERITY = "Dexterity",
+  DODGE = "Dodge",
+  GOLD = "Gold",
+  HEALTH = "Current health",
+  HEALTH_MAX = "Health maximum",
+  NOTHING = "Nothing",
+  STRENGTH = "Strength",
+}
+
+export enum Type {
+  HAND,
+  BODY,
+  LEGS,
+  POTION,
+  OTHER
+}
 
 @Entity()
 export class Item {
@@ -25,7 +44,6 @@ export class Item {
   @Column({
     type: 'int',
     unique: false,
-    nullable: false,
     default: 0,
   })
   price: number;
@@ -37,6 +55,14 @@ export class Item {
     nullable: true,
   })
   url_image: string;
+
+  @Column({
+    type: 'enum',
+    nullable: false,
+    comment: "Define what is affected by the item",
+    default : Stat_affected.NOTHING,
+  })
+  stat_affected : Stat_affected;
 
   // --------------TIMESTAMPS
   @CreateDateColumn({
@@ -53,13 +79,9 @@ export class Item {
   updated_at: Date;
 
   // --------------RELATIONS
-  @ManyToOne(() => Game, (game) => game.items, {
-    cascade: false,
-  })
-  game: string;
+  @ManyToOne(() => Game, (game) => game.items)
+  game: Game;
 
-  @ManyToOne(() => Effect, (effect) => effect.items)
-  effect: string;
-
-  // Relation ManyToMany with personnage is in entity personnage
+  @ManyToMany(() => Inventory, (inventory) => inventory.items)
+  inventories: Inventory[]
 }

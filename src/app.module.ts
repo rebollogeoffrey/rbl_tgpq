@@ -16,6 +16,7 @@ import { GameModule } from './game/game.module';
 import { PersonnageModule } from './personnage/personnage.module';
 import { ItemModule } from './item/item.module';
 import { StatisticModule } from './statistic/statistic.module';
+import { InventoryModule } from './inventory/inventory.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { StatisticModule } from './statistic/statistic.module';
     PersonnageModule,
     ItemModule,
     StatisticModule,
+    InventoryModule,
   ],
   controllers: [AppController],
   providers: [AppService],
